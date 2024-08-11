@@ -1,6 +1,6 @@
 <?php
 
-$succes = 0;
+$success = 0;
 $user = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $result = mysqli_query($con, $sql);
             if ($result) {
                 // echo "Signup Successfully";
-                $succes = 1;
+                $success = 1;
             } else {
                 die(mysqli_error($con));
             }
@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     ?>
     <?php
-    if ($succes) {
+    if ($success) {
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>Yes-Great! </strong>Sugnup Successfully.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
