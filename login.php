@@ -1,7 +1,7 @@
 <?php
 
-$success = 0;
-$user = 0;
+$login =0;
+$invalid=0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connect.php';
@@ -10,24 +10,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
 
 
-    $sql = "select * from `registration` where username='$username'";
+    $sql = "select * from `registration` where username='$username' and password='$password'";
     $result = mysqli_query($con, $sql);
     if ($result) {
         $num = mysqli_num_rows($result);
         if ($num > 0) {
-            // echo "User already exist";
-            $user = 1;
+          //echo "login Successful";
+          $login=1;
+          session_start();
+          $_SESSION['username']=$username;
+          header('location:home.php');
+          
         } else {
-            $sql = "insert into `registration`(username,password) values('$username','$password')";
-
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-                // echo "Signup Successfully";
-                $success = 1;
-                header('location:login.php');
-            } else {
-                die(mysqli_error($con));
-            }
+           // echo "Invalid username or password";
+           $invalid=1;
         }
     }
 }
@@ -44,26 +40,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-    <?php
-    if ($user) {
-        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
-  <strong>Oh- Sorry! </strong> Data is Already Exists.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>';
-    }
-    ?>
-    <?php
-    if ($success) {
+<?php
+    if ($login) {
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <strong>Yes-Great! </strong>Sugnup Successfully.
+  <strong>Yes-Great! </strong>login Successful.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>';
     }
     ?>
+<?php
+    if ($invalid) {
+        echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+  <strong>Oh- Sorry! </strong> Invalid username or password.
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>';
+    }
+    ?>
+   
 
-    <h1 class="text-center">SignUp Page</h1>
+    <h1 class="text-center">Login to our website</h1>
     <div class="container mt-5">
-        <form action="sign.php" method="post">
+        <form action="login.php" method="post">
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Name</label>
                 <input type="text" class="form-control" placeholder="Enter your username" name="username">
@@ -72,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <label for="exampleInputPassword1" class="form-label">Password</label>
                 <input type="password" class="form-control" placeholder="Enter your password" name="password">
             </div>
-            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
         </form>
     </div>
 
