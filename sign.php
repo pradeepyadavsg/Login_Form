@@ -2,14 +2,15 @@
 
 $success = 0;
 $user = 0;
-$invalid=0;
+$invalid = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connect.php';
 
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $cpassword=$_POST['cpassword'];
+    $cpassword = $_POST['cpassword'];
+
 
 
     $sql = "select * from `registration` where username='$username'";
@@ -17,24 +18,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result) {
         $num = mysqli_num_rows($result);
         if ($num > 0) {
-           
+
             $user = 1;
         } else {
-            if($password===$cpassword){
+            if ($password === $cpassword) {
 
-          
-            $sql = "insert into `registration`(username,password) values('$username','$password')";
 
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-               
-                $success = 1;
-            }    header('location:login.php');
+                $sql = "insert into `registration`(username,password) values('$username','$password')";
+
+                $result = mysqli_query($con, $sql);
+                if ($result) {
+
+                    $success = 1;
+                }
+                header('location:login.php');
             } else {
-               $invalid=1;
+                $invalid = 1;
             }
-        
-    }
+        }
     }
 }
 ?>

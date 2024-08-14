@@ -1,7 +1,7 @@
 <?php
 
-$login =0;
-$invalid=0;
+$login = 0;
+$invalid = 0;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'connect.php';
@@ -15,15 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($result) {
         $num = mysqli_num_rows($result);
         if ($num > 0) {
-          //echo "login Successful";
-          $login=1;
-          session_start();
-          $_SESSION['username']=$username;
-          header('location:home.php');
-          
+            //echo "login Successful";
+            $login = 1;
+            session_start();
+            $_SESSION['username'] = $username;
+            header('location:home.php');
         } else {
-           // echo "Invalid username or password";
-           $invalid=1;
+            // echo "Invalid username or password";
+            $invalid = 1;
         }
     }
 }
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body>
 
-<?php
+    <?php
     if ($login) {
         echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
   <strong>Yes-Great! </strong>login Successful.
@@ -48,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>';
     }
     ?>
-<?php
+    <?php
     if ($invalid) {
         echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
   <strong>Oh- Sorry! </strong> Invalid username or password.
@@ -56,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </div>';
     }
     ?>
-   
+
 
     <h1 class="text-center">Login to our website</h1>
     <div class="container mt-5">
